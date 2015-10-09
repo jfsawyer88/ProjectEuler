@@ -1,0 +1,5 @@
+"Rule: ocaml: ml & cmi -> cmx & o (%=pe003 )": "\186\203\191G\150hf{\171\202!5\148\219\133P"
+"Rule: ocaml: ml -> cmo & cmi (%=pe003 )": "\221\200\235\133-\200\187\239\022\176Xl0}\127u"
+"Resource: /home/ubuntu/git/ProjectEuler/pe003/pe003.ml": "\207U;\249\154\242\176\198\174\007\\\203\252\141\023\007"
+"Rule: ocaml: cmx* & o* -> native (%=pe003 )": "\162\142gX\011\247Z\020v8\2500=\253\180\020"
+"Rule: ocaml dependencies ml (%=pe003 )": "s\172\030?V\253j\190\177R\007\019\200u\196I"

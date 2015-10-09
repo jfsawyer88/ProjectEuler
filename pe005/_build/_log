@@ -1,0 +1,10 @@
+### Starting build.
+# Target: pe005.ml.depends, tags: { extension:ml, file:pe005.ml, ocaml, ocamldep, quiet }
+/usr/bin/ocamldep.opt -modules pe005.ml > pe005.ml.depends
+# Target: pe005.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:pe005.cmo, file:pe005.ml, implem, ocaml, quiet }
+/usr/bin/ocamlc.opt -c -o pe005.cmo pe005.ml
+# Target: pe005.cmx, tags: { compile, extension:cmx, extension:ml, file:pe005.cmx, file:pe005.ml, implem, native, ocaml, quiet }
+/usr/bin/ocamlopt.opt -c -o pe005.cmx pe005.ml
+# Target: pe005.native, tags: { dont_link_with, extension:native, file:pe005.native, link, native, ocaml, program, quiet }
+/usr/bin/ocamlopt.opt unix.cmxa pe005.cmx -o pe005.native
+# Compilation successful.

@@ -9,7 +9,7 @@ let time f =
   let res = f () in
   Printf.printf "Execution time: %f seconds\n"
                 (Unix.gettimeofday () -. t);
-  Printf.printf "Output: %d\n" res;
+  Printf.printf "Output: %d" res;
 ;;
 
 
@@ -26,4 +26,5 @@ let pe002 lim =
 ;;
 
 
-time (fun () -> (pe002 4000000))
+time (fun () -> (pe002 4000000));;
+print_newline ()

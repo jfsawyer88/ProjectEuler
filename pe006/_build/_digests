@@ -1,0 +1,5 @@
+"Rule: ocaml dependencies ml (%=pe006 )": "=w|\151\146\161\018\023\019\192\195\204\142\215\183\227"
+"Rule: ocaml: ml -> cmo & cmi (%=pe006 )": "\145\160\n\235\192x\254\217\191=\146\247\238\194M\192"
+"Rule: ocaml: cmx* & o* -> native (%=pe006 )": "\222b}\170\243LK\191\193\248\158q\177\022!s"
+"Rule: ocaml: ml & cmi -> cmx & o (%=pe006 )": "[\172\245\138\001`\241[G\202\211\153]\228\160X"
+"Resource: /home/ubuntu/git/ProjectEuler/pe006/pe006.ml": "*\186\188s\218Dy\231d\017\251\202\019\bk\019"

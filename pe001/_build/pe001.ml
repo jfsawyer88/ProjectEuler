@@ -3,13 +3,32 @@
 
 (** timing function **)
 (*#load "unix.cma";;*)
-let time f =
+(*let time f =
   let t = Unix.gettimeofday () in
   let res = f () in
   Printf.printf "Execution time: %f seconds\n"
                 (Unix.gettimeofday () -. t);
   Printf.printf "Output: %d" res;
 ;;
+ *)
+
+
+let time f number =
+  let t = Unix.gettimeofday () in
+  let rec loop i =
+    if i = number then f ()
+    else
+      begin
+	ignore (f ());
+	loop (i + 1)
+      end
+  in
+  let res = loop 0 in
+  Printf.printf "Execution time: %f seconds\n"
+                (Unix.gettimeofday () -. t);
+  Printf.printf "Output: %d" res;
+;;
+
 
 
 let pe001 n =
@@ -39,5 +58,5 @@ let rec main () =
 main ()
 *)
 
-time (fun () -> (pe001 1000));;
+time (fun () -> (pe001 1000)) 1000000;;
 print_newline ()

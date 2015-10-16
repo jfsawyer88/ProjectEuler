@@ -1,0 +1,51 @@
+(** Project Euler **)
+(** Longest Collatz Sequence **)
+
+
+(** timing function **)
+(*#load "unix.cma";;*)
+let time f number =
+  let t = Unix.gettimeofday () in  (** get the current time **)
+  let time_unit = match number with
+    | 1 -> ""
+    | 1000 -> "milli-"
+    | 1000000 -> "micro-"
+    | 1000000000 -> "nano-"
+    | _ -> "1/" ^ (string_of_int number) ^ "-"
+  in
+  let rec loop i =
+    if i = number then f ()        (** evaluate f number times **)
+    else
+      begin
+	ignore (f ());
+	loop (i + 1)
+      end
+  in
+  let res = loop 1 in              (** keep the result to print **)
+  Printf.printf "Execution time: %f %sseconds\n"
+                (Unix.gettimeofday () -. t)
+		time_unit;
+  Printf.printf "Output: %d\n" res;
+;;
+
+
+let collatz n =
+  if 0 = n mod 2 then n / 2
+  else 3 * n + 1
+;;
+
+
+let pe014 n =
+  let l = Hashtbl.create n in
+  let m = 1 in
+  let aux s c =
+    if s < n then c + Hashtbl.find l s
+    else aux (collatz s) (succ c)
+  in
+  for i = 2 to n do
+    Hashtbl.add l i (aux i 0);
+    if (Hashtbl.find l m) < (Hashtbl.find l i) then let m = i in
+  done;
+  Hashtbl.find l n
+;;
+

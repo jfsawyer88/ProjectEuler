@@ -21,7 +21,7 @@ let time f number =
 	loop (i + 1)
       end
   in
-  let res = loop 0 in              (** keep the result to print **)
+  let res = loop 1 in              (** keep the result to print **)
   Printf.printf "Execution time: %f %sseconds\n"
                 (Unix.gettimeofday () -. t)
 		time_unit;
@@ -61,5 +61,5 @@ let pe006_2 n =
 ;;
 
 
-time (fun () -> (pe006_1 100)) 1000000;;
-time (fun () -> (pe006_2 100)) 1000000000
+time (fun () -> (pe006_1 1000)) 1000000;;
+time (fun () -> (pe006_2 1000)) 1000000000

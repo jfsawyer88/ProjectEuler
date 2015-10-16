@@ -1,0 +1,4 @@
+#!/home/ubuntu/j/bin/jconsole
+
+time=: ": 6!:2 'out=: ": {: q: 600851475143'
+

@@ -1,0 +1,10 @@
+### Starting build.
+# Target: pe014.ml.depends, tags: { extension:ml, file:pe014.ml, ocaml, ocamldep, quiet }
+/usr/bin/ocamldep.opt -modules pe014.ml > pe014.ml.depends
+# Target: pe014.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:pe014.cmo, file:pe014.ml, implem, ocaml, quiet }
+/usr/bin/ocamlc.opt -c -o pe014.cmo pe014.ml
+# Target: pe014.cmx, tags: { compile, extension:cmx, extension:ml, file:pe014.cmx, file:pe014.ml, implem, native, ocaml, quiet }
+/usr/bin/ocamlopt.opt -c -o pe014.cmx pe014.ml
+# Target: pe014.native, tags: { dont_link_with, extension:native, file:pe014.native, link, native, ocaml, program, quiet }
+/usr/bin/ocamlopt.opt unix.cmxa pe014.cmx -o pe014.native
+# Compilation successful.

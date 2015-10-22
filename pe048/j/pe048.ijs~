@@ -1,0 +1,4 @@
+NB. Project Euler
+NB. Self Powers
+
+time=: ": 6!:2 'output=: 

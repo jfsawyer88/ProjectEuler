@@ -1,0 +1,62 @@
+(** Project Euler **)
+(** 10001st Prime **)
+
+
+(** timing function **)
+(*#load "unix.cma";;*)
+let time f number =
+  let t = Unix.gettimeofday () in  (** get the current time **)
+  let time_unit = match number with
+    | 1 -> ""
+    | 1000 -> "milli-"
+    | 1000000 -> "micro-"
+    | 1000000000 -> "nano-"
+    | _ -> "1/" ^ (string_of_int number) ^ "-"
+  in
+  let rec loop i =
+    if i = number then f ()        (** evaluate f number times **)
+    else
+      begin
+	ignore (f ());
+	loop (i + 1)
+      end
+  in
+  let res = loop 1 in              (** keep the result to print **)
+  Printf.printf "Execution time: %f %sseconds\n"
+                (Unix.gettimeofday () -. t)
+		time_unit;
+  Printf.printf "Output: %d\n" res;
+;;
+
+
+(** determines if the input is prime **)
+let is_prime n =
+  let rec is_not_divisor d =
+    d * d > n || (n mod d <> 0) && is_not_divisor (d + 2)
+  in
+  n <> 1 && is_not_divisor 3
+;;
+
+(*let is_prime n =
+  let rec aux d =
+    if d * d > n then true
+    else
+      if 0 = n mod d then false
+      else aux (d + 2)
+  in
+  aux 3
+;;*)
+
+let pe007 n =
+  let rec loop i cnt =
+    if cnt = n then i - 2
+    else
+      if is_prime i then
+	loop (i + 2) (cnt + 1)
+      else
+	loop (i + 2) cnt
+  in
+  loop 3 1
+;;
+
+time (fun () -> (pe007 10001)) 1

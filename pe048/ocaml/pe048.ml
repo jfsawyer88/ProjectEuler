@@ -36,12 +36,19 @@ let mpow a b n =
   aux a b n 1
 ;;
 
-let rec  mpow a b n =
+(*let rec mprod a b n =
+  match b with
+  | 0 -> 0
+  | 1 -> a mod n
+  | b -> ((mprod a (b mod 2) n) + (mprod ((a + a) mod n) (b / 2) n)) mod n
+;;
+
+let rec mpow a b n =
   match b with
   | 0 -> 1
   | 1 -> a mod n
-  | b -> (mpow a (b mod 2) n) * (mpow ((a * a) mod n) (b / 2) n)
-;;
+  | b -> mprod (mpow a (b mod 2) n) (mpow (mprod a a n) (b / 2) n) n
+;;*)
 
 
 let lmsum l n =

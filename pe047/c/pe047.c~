@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <sys/time.h>
+
+int count_distinct_factors(int n)
+{
+  int cnt = 0;
+  int p;
+  for (p = 2; (n != 1) && (p * p <= n); p++)
+    {
+      if (0 == n % p)
+	{
+	  cnt++;
+	  n /= p;
+	  while (0 == n % p)
+	    {
+	      n /= p;
+	    }
+	}
+    }
+  return cnt;
+}
+
+main()
+{
+  struct timeval tv1, tv2;
+  gettimeofday(&tv1, NULL);
+
+  int cnt = 0;
+  int n;
+  for (n = 2; cnt < 4; n++)
+    {
+      if (4 == count_distinct_factors(n))
+	{
+	  cnt++;
+	}
+      else
+	{
+	  cnt = 0;
+	}
+    }
+
+
+  gettimeofday(&tv2, NULL);
+
+  printf("Execution time: %f seconds\n",
+         (double) (tv2.tv_usec - tv1.tv_usec)/1000000 + 
+         (double) (tv2.tv_sec - tv1.tv_sec));
+  printf("Output: %d\n", n - 4);
+
+}

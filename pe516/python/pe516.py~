@@ -1,0 +1,49 @@
+#!/usr/bin/python
+# project euler
+# 516
+
+import gmpy2, bisect
+import time
+t0 = time.time()
+
+limit = 10 ** 2
+m = 2 ** 32
+
+hams = []
+i = 0
+j = 0
+k = 0
+while 2**i <= limit:
+    while 2**i * 3**j <= limit:
+        while 2**i * 3**j * 5**k <= limit:
+            hams.append(2**i * 3**j * 5**k)
+            k += 1
+        j += 1
+        k = 0
+    i += 1
+    j = 0
+
+hams.sort()
+hprimes = [n+1 for n in hams[4:-1] if gmpy2.is_prime(n+1)]
+
+sqrfree_prehams = []
+index = [0]
+while len(hprimes) not in index:
+    factors = [hprimes[i] for i in index]
+    n = reduce(gmpy2.mul, factors, 1)
+    if n < limit:
+        index.append(1 + index[-1])
+        sqrfree_prehams.append(n)
+    else:
+        index = index[:-1]
+        if index == []: break
+        index[-1] = 1 + index[-1]
+
+
+out = sum(hams)
+for sfph in sqrfree_prehams:
+    out = (out + sfph * sum(hams[:bisect.bisect(hams, limit/sfph)])) % m
+
+
+print "Execution time:", time.time() - t0
+print "Output: ", out

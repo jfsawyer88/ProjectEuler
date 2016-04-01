@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <sys/time.h>
+
+long sum_digits(long n)
+{
+  int res = 0;
+  while (n > 0)
+    {
+      res += n % 10;
+      n   /= 10;
+    }
+  return res;
+}
+
+main()
+{
+  struct timeval tv1, tv2;
+  gettimeofday(&tv1, NULL);
+
+  long N = 1000000000;
+  long a = 1;
+  long i; 
+  for (i = 0; i < N - 1; i++)
+    {
+      a += sum_digits(a);
+    }
+
+
+  gettimeofday(&tv2, NULL);
+
+  printf("Execution time: %f seconds\n",
+         (double) (tv2.tv_usec - tv1.tv_usec)/1000000 + 
+         (double) (tv2.tv_sec - tv1.tv_sec));
+  printf("Output: %ld\n", a);
+
+  return 0;
+
+}

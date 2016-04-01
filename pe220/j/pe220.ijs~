@@ -1,0 +1,34 @@
+NB. pe220
+
+NB. from rosetta code
+NB.require 'plot'
+NB.start=: 0 0,: 1 0
+NB.step=: ],{: +"1 (0 _1,: 1 0) +/ .*~ |.@}: -"1 {:
+NB.plot <"1 |: step^:13 start
+NB. gives answer to sample
+NB.500{step^:10 start
+
+NB.-------------------------------
+
+NB. input
+n=: 10^12x NB. in ~1.3ms
+NB.n=: 10^10000x NB. in ~ 4min
+
+NB. rotates point y 90 degrees about point x
+rot=: 4 : '((2 2$0 _1 1 0x)&(+/ .*))&.(-&x)  y'
+
+NB. largest power of 2 below y
+lpb=: [:x:2x^[:<.2x^.]
+
+NB. gives path of answer
+path=: <.2^.(-~2*lpb)^:a: n
+
+NB. tabulates the required positions at powers of two
+tab=: (rot&0 0)^:(<>:{.path) 0 1
+
+NB. put it togehter and bibity bobity boo
+NB.smoutput ,.rot/path{tab
+
+NB. alltogether about 1.3ms
+stdout 'Execution time: ', (":6!:1''), LF
+stdout 'Output: ,' stringreplace ":rot/path{tab

@@ -1,0 +1,54 @@
+#!/usr/bin/python
+
+## Project Euler
+## Double-base Palindromes
+
+import time
+
+t0 = time.time()
+N = 1000000
+
+def reverse_digits(n):
+    res = 0
+    while 0 < n:
+        d = n % 10
+        n = (n - d) / 10
+        res = res*10 + d
+    return res
+
+def palindromes():
+    "generates all palindromes"
+    for n in xrange(1, 10):
+        yield n 
+    for n in xrange(1, 10):
+        yield 11 * n
+
+    i = 2
+    while True:
+        for n in xrange(10**(i-1), 10**i):
+            yield (10**i)*(n//10) + reverse_digits(n)
+        for n in xrange(10**(i-1), 10**i):
+            yield (10**i)*n + reverse_digits(n)
+        i += 1
+
+
+def is_pal2(n):
+    "Checks if n is a palindrome in base 2"
+    res = []
+    while 0 < n:
+        d = n % 2
+        n = n / 2
+        res.append(d)
+    return res == res[::-1]
+
+res = 0
+for n in palindromes():
+    if n < N:
+        if is_pal2(n):
+            res += n
+    else:
+        break
+
+
+print "Execution time:", time.time() - t0
+print "Output:", res

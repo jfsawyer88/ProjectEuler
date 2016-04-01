@@ -1,0 +1,25 @@
+#!/usr/bin/python
+
+# project euler
+# problem 500!!!
+
+import bisect
+import gmpy2
+import math
+import time
+t0 = time.time()
+
+def pe500(e, M):
+    e = e/2
+    prd = 1
+    np = 3
+    queue = [np]
+    while e > math.log(np, 2):
+        if queue[0] == np:
+            np = gmpy2.next_prime(np)
+            bisect.insort(queue, np)
+        else:
+            bisect.insort(queue, queue[0]**2)
+        prd = prd * queue.pop(0) # % M
+        e -= 1
+    return 2**(2**e - 1) * prd

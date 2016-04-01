@@ -1,0 +1,14 @@
+#!/usr/bin/python
+
+## Project Euler
+## Champernowne's Constant
+
+import time
+t0 = time.time()
+
+temp = [9 * 10**i * (i + 1) for i in xrange(1, 6)]
+intervals = [10]
+for i in temp:
+    intervals.append(intervals[-1] + i)
+
+to_find = [10**i for i in xrange(1, 7)]

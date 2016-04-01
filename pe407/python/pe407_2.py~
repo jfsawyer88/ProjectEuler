@@ -1,0 +1,90 @@
+#!/usr/bin/python
+# pe 407
+
+import time
+t0 = time.time()
+
+# extended euclidean algorithm
+def egcd(a, b):
+    x,y, u,v = 0,1, 1,0
+    while a !=0:
+        q, r = b // a, b % a
+
+        m, n = x - u * q, y - v * q
+
+        b,a, x,y, u,v = a,r, u,v, m,n
+    return b, x, y
+
+# inverse of a in Z_m
+def mod_inv(a, m):
+    gcd, x, y = egcd(a, m)
+    if gcd != 1:
+        return None
+    else:
+        return x % m
+
+# chinese remainder theorem
+def CRT(a, p, N):
+    res = 0
+    for i in xrange(len(a)):
+        n = N / p[i]
+        res += a[i] * mod_inv(n, p[i]) * n
+    return res % N
+
+
+# gives the digits of n in base b
+# will be used to enumerate 2^k cases of CRT equations
+def digits(n, b = 10):
+    res = []
+    while 0 < n:
+        d = n % b
+        n = n / b
+        res.append(d)
+    res.reverse()
+    return res
+
+
+# number of factors of p in n
+def nf(n, p):
+    cnt = 0
+    while 0 == n % p:
+        n /= p
+        cnt += 1
+    return cnt
+
+
+# increment binary a vector
+def inc(a):
+    if [] == a:
+        return a
+    if 0 == a[-1]:
+        return a[:-1] + [1]
+    else:
+        return inc(a[:-1]) + [0]
+
+
+N = 100
+
+factored = [[] for i in xrange(N + 1)]
+for p in xrange(2, N+1):
+    # if p is prime
+    if [] == factored[p]:
+        factored[p] = [p]
+        for n in xrange(p + p, N+1, p):
+            factored[n].append(p ** nf(n, p))
+
+
+output = 0
+for n in xrange(2, N + 1):
+    M = 0
+    a = [0 for p in factored[n]]
+    for i in xrange(N - 2):
+        a = inc(a)
+        m = CRT(a, factored[n], n)
+        if M < m:
+            M = m
+    output += M
+
+print
+print "Output:", output
+print "Timing:", time.time() - t0

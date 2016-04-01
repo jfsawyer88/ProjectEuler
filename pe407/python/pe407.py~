@@ -1,0 +1,31 @@
+#!/usr/bin/python
+# pe 407
+
+# extended euclidean algorithm
+def egcd(a, b):
+    x,y, u,v = 0,1, 1,0
+    while a !=0:
+        q, r = b // a, b % a
+
+        m, n = x - u * q, y - v * q
+
+        b,a, x,y, u,v = a,r, u,v, m,n
+    return b, x, y
+
+# inverse of a in Z_m
+def mod_inv(a, m):
+    gcd, x, y = egcd(a, m)
+    if gcd != 1:
+        return None
+    else:
+        return x % m
+
+# chinese remainder theorem
+def CRT(a, p, N):
+    res = 0
+    for i in xrange(len(a)):
+        n = N / p[i]
+        res += a[i] * mod_inv(n, p[i]) * n
+    return res % N
+
+

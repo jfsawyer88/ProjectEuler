@@ -73,9 +73,8 @@ main()
     }
 
   //sum up primes
-  i = 0;
   int num_primes = 0;
-  for ( ; i < N; i++)
+  for (i=0; i < N; i++)
     {
       if (prime_bool[i])
 	{

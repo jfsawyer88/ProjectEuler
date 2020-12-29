@@ -7,8 +7,8 @@ import (
 
 //const N = 1000000000
 //const P = 100
-const N = 1000000000000000
-const P = 15
+const N = 100000000000000
+const P = 100
 
 
 func intLog(n, b int64) int64 {
@@ -70,10 +70,13 @@ func ham(N int64, primes []int64) int64 {
   // nb: primes must be sorted
 
   // if only one prime left then only powers available, so take a log
+  //if 0 == len(primes) { return 1 }
   if 1 == len(primes) {
     return 1+intLog(N, primes[0])
   }
-  // if largest prime to consider is too large then drop it
+
+  // if largest priem to consider is too large then drop it
+  //if 0 == N { return 0 }
   if N < primes[len(primes)-1] {
     return ham(N, primes[:len(primes)-1])
   }
@@ -82,13 +85,24 @@ func ham(N int64, primes []int64) int64 {
   return ham(N, primes[:len(primes)-1]) + ham(N/primes[len(primes)-1], primes)
 }
 
+func ham2(lim int64, N int64, primes []int64) int64 {
+  //ans := int64(1)
+  ans := N // <- each of these is a hamming number
+  for i := 0; (i < len(primes) && (N*primes[i]) <= lim) ; i++ {
+    ans += ham2(lim, N*primes[i], primes[i:])
+  }
+  return ans
+}
+
 func main() {
   start := time.Now()
   //ans := ham(100000000, []int64{2, 3, 5})
-  ans := ham(1000000000000000000/133049351085651000, primes_below(16))
+  //ans := ham(1000000000000000000/133049351085651000, primes_below(16))
   //ans := ham(4, []int64{2, 3})
-  //ans := ham(100000000, []int64{2, 3, 5, 7, 13, 97})
+  //ans := ham(1000000000000000000/(9261000), []int64{2, 3, 5, 7})
+  //ans := ham2(1000000000000000000/(9261000), 1, []int64{2, 3, 5, 7})
   //ans := ham(N, primes_below(P))
+  ans := ham2(N, 1, primes_below(P))
   fmt.Printf("Result is %v\n", ans)
   fmt.Printf("Timing: %v", time.Since(start))
 }

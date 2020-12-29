@@ -48,33 +48,34 @@ func primes_below(N int64) []int64 {
   return primes
 }
 
-func ham(N int64, primes []int64) int64 {
-  // returns count of "hamming" numbers not exceeding N
-  // which only have prime factors in primes
-  // nb: primes must be sorted
-
-  // if only one prime left then only powers available, so take a log
-  if 1 == len(primes) {
-    return 1+intLog(N, primes[0])
+func ham2(lim int64, N int64, primes []int64) int64 {
+  ans := lim/N
+  for i := 0; i < len(primes) && N <= lim/primes[i] ; i++ {
+    ans += ham2(lim, N*primes[i], primes[i:])
   }
-  // if largest prime to consider is too large then drop it
-  if N < primes[len(primes)-1] {
-    return ham(N, primes[:len(primes)-1])
-  }
-
-  // recursively
-  return ham(N, primes[:len(primes)-1]) + ham(N/primes[len(primes)-1], primes)
+  return ans
 }
 
+func pe694(N int64) int64 {
+  // returns the sum of squarefree numbers below N
+  return pe694_sub(N, make([]int64, 0), primes_below(N))
+}
 
-
-
+func pe694_sub(N int64, A, primes []int64) int64 {
+  a := int64(1)
+  for _, p := range A {
+    a *= p
+  }
+  ans := ham2(N*N*N, a*a*a, A)
+  for i := 0; (i < len(primes)) && (a <= N/primes[i]); i++ {
+    ans += pe694_sub(N, append(A, primes[i]), primes[i+1:])
+  }
+  return ans
+}
 
 func main() {
   start := time.Now()
-
-
-
-  //fmt.Printf("Result is %v\n", ans)
+  ans := pe694(1000000)
+  fmt.Printf("Result is %v\n", ans)
   fmt.Printf("Timing: %v", time.Since(start))
 }

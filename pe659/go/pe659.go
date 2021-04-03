@@ -129,13 +129,14 @@ func mod_half(n, p int64) int64 {
 }
 
 func mod_pow(a, b, p int64) int64 {
-  if b == 0 {
-    return 1
-  } else if b%2 == 0 {
-    return mod_pow(a*a%p, b/2, p)
-  } else {
-    return (a * mod_pow(a*a%p, b/2, p)) % p
+  ans := int64(1)
+  a %= p
+  for b > 0 {
+    if 1 == b % 2 { ans = (ans*a)%p }
+    a = (a*a)%p
+    b /= 2
   }
+  return ans
 }
 
 func pow(a, b int64) int64 {
